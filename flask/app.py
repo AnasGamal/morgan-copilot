@@ -2,12 +2,14 @@ import os
 
 import openai
 from flask import Flask, redirect, render_template, request, url_for
-from process_pdf import processPdf
 
+## from utils direectory, import process() function from pdf.py
+from utils.pdf import process
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-processPdf('./data/unselectable_sample.pdf')
+## call process() function from pdf.py
+process()
 
 @app.route("/", methods=("GET", "POST"))
 def index():
