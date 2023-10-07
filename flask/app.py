@@ -2,13 +2,12 @@ import os
 
 import openai
 from flask import Flask, redirect, render_template, request, url_for
-
-
-##
+from process_pdf import processPdf
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+processPdf('./data/unselectable_sample.pdf')
 
 @app.route("/", methods=("GET", "POST"))
 def index():
@@ -22,6 +21,7 @@ def index():
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
+
     return render_template("index.html", result=result)
 
 
