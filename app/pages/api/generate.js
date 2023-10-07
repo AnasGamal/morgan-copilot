@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
-import processPDF from './process-pdf.js'
+import processPDF from './utils/process-pdf.js'
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
