@@ -1,15 +1,3 @@
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
-from dotenv import load_dotenv
-
-load_dotenv()
-
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-split_docs = text_splitter.split_documents(docs)
-
-db = Chroma.from_documents(split_docs, embedding=OpenAIEmbeddings())
-
 from langchain.chat_models import ChatOpenAI
 
 chat = ChatOpenAI(model="gpt-4")

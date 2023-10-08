@@ -3,26 +3,23 @@ import os
 import openai
 from flask import Flask, redirect, render_template, request, url_for
 
-## from utils direectory, import process() function from pdf.py
-from utils.pdf import process
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-## call process() function from pdf.py
-process()
 
-@app.route("/", methods=("GET", "POST"))
+@app.route("/add-document", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        animal = request.form["animal"]
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(animal),
-            temperature=0.6,
-        )
-        return redirect(url_for("index", result=response.choices[0].text))
+        animal = request.files["file"]
+        # response = openai.Completion.create(
+        #     model="text-davinci-003",
+        #     prompt=generate_prompt(animal),
+        #     temperature=0.6,
+        # )
+        # return redirect(url_for("index", result=response.choices[0].text))
 
-    result = request.args.get("result")
+    # result = request.args.get("result")
+    result = process_file(uploaded_file)
 
     return render_template("index.html", result=result)
 
