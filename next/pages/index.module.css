@@ -6,6 +6,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: "ColfaxAI";
   src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
@@ -13,55 +14,153 @@
   font-weight: bold;
   font-style: normal;
 }
-.main,
-.main input {
-  font-size: 16px;
-  line-height: 24px;
-  color: #353740;
-  font-family: "ColfaxAI", Helvetica, sans-serif;
-}
-.main {
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center; /* Center horizontally */
+}
+
+.topbar {
+  background-color: #333;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Add this line to center-align text */
+}
+
+.logo {
+  width: 15%;
+  height: 50%;
+  padding: 15px;
+}
+
+
+.infoBox {
+  display: flex;
+  flex-direction: row;
+  height: 80%;
+  width: 95%;
+  background-color: #333;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+
+.scrollBox{
+margin: 5px;
+width:20%;
+background-color: rgb(136, 133, 133);
+border-radius: inherit;
+overflow: auto;
+}
+
+.title{
+  color: black;
+  position: absolute;
+  font-size: 50px;
+  background-color: #333;
+  width: 21%;
+  border-radius: 7px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center; /* Center horizontally */
+  top: 1px;
+  left: 0;
+}
+
+
+.case{
+  all: unset;
+  color: black;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Align content to the top */
+  align-items: center; /* Center horizontally */
+  font-size: 20px;
+  cursor: pointer;
+  height: 40px;
+  margin: 0;
+}
+.case:hover{
+  opacity: 50%;
+  background-color: #333;
+}
+.caseList{
+  top: 6.3%;
+  z-index: 0;
+  position: relative;
+  padding: 1px;
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.userInput {
+  width: 40%; /* Allow the input to expand to fit content */
+  height: 60px;
+  background-color: gray;
+  opacity: 1; /* Adjust opacity as needed */
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  position: relative;
+  top: 86.5%;
+  color: white;
+  text-decoration: none;
+  outline: none;
+  white-space: wrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  font-size: 15px;
+  resize: none;
+}
+
+
+
+.userInput::placeholder{
+  color: white;
+  opacity: 100%;
+
+}
+
+/* Add these styles to your CSS file (index.module.css) */
+.uploadSection {
+  display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  top: 86.5%;
 }
-.main .icon {
-  width: 34px;
-}
-.main h3 {
-  font-size: 32px;
-  line-height: 40px;
-  font-weight: bold;
-  color: #202123;
-  margin: 16px 0 40px;
-}
-.main form {
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-}
-.main input[type="text"] {
-  padding: 12px 16px;
-  border: 1px solid #10a37f;
-  border-radius: 4px;
-  margin-bottom: 24px;
-  outline-color: #10a37f;
-}
-.main ::placeholder {
-  color: #8e8ea0;
-  opacity: 1;
-}
-.main input[type="submit"] {
-  padding: 12px 0;
+
+.uploadButton {
+  background-color: #007bff; /* Blue color, you can change it */
   color: #fff;
-  background-color: #10a37f;
-  border: none;
-  border-radius: 4px;
-  text-align: center;
+  padding: 10px 20px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
 }
-.main .result {
-  font-weight: bold;
-  margin-top: 40px;
+
+.uploadButton:hover {
+  background-color: #0056b3; /* Darker blue color on hover, you can change it */
 }
+
+/* Style for displaying the selected file name */
+.p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff; /* You can change the color */
+}
+

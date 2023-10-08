@@ -3,56 +3,100 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState();
+  const [result, setResult] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Function to handle file input change
+  function handleFileInputChange(event) {
+    setSelectedFile(event.target.files[0]);
+  }
 
   async function onSubmit(event) {
     event.preventDefault();
-    try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ animal: animalInput }),
-      });
 
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
+    try {
+      // Check if a file has been selected
+      if (!selectedFile) {
+        throw new Error("Please select a PDF file.");
       }
 
-      setResult(data.result);
-      setAnimalInput("");
-    } catch(error) {
-      // Consider implementing your own error handling logic here
+      // You can add additional form data here if needed
+      const formData = new FormData();
+
+      formData.append("file", selectedFile);
+
+      // Make an API request to send the form data
+      const response = await fetch("/api/upload", {
+        method: "POST", // Change to your API endpoint and HTTP method
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      // Handle a successful response here, if needed
+      // For example, you can display a success message to the user
+      setResult("File uploaded successfully");
+
+    } catch (error) {
+      // Handle errors here
       console.error(error);
       alert(error.message);
     }
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
-        <title>OpenAI Quickstart</title>
-        <link rel="icon" href="/dog.png" />
+        <title>OpenAI Morgan</title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
+      <div className={styles.topbar}>
+        <img className={styles.logo} src="/morgan.png" alt="Logo" />
+      </div>
 
-      <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
-        <form onSubmit={onSubmit}>
-          <input
+      <div className={styles.infoBox}>
+        <div className={styles.scrollBox}>
+          <div className={styles.title}>CASES</div>
+          <ul className={styles.caseList}>
+            <li className={styles.case}>Case Number 1</li>
+            <li className={styles.case}>Case Number 2</li>
+            <li className={styles.case}>Case Number 3</li>
+            <li className={styles.case}>Case Number 4</li>
+            <li className={styles.case}>Case Number 5</li>
+            {/* Your case list items */}
+          </ul>
+        </div>
+
+        {/* Wrap your elements in a form element */}
+       
+          <textarea
+            className={styles.userInput}
             type="text"
-            name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            placeholder="Send A Message"
+            name="userinput"
           />
-          <input type="submit" value="Generate names" />
+          <form onSubmit={onSubmit}>
+          <div className={styles.uploadSection}>
+            {/* Add a label or button to trigger the file input */}
+            <label className={styles.uploadButton}>
+              Upload PDF
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handleFileInputChange}
+                style={{ display: "none" }}
+              />
+            </label>
+            {selectedFile && (
+              <p className={styles.p}>Selected File: {selectedFile.name}</p>
+            )}
+            {result && <p className={styles.p}>Uploaded File: {result}</p>}
+            <button type="submit">Submit</button>
+          </div>
         </form>
-        <div className={styles.result}>{result}</div>
-      </main>
+      </div>
     </div>
   );
 }
