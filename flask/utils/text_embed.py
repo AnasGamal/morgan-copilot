@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def embed_text(docs):
+def embed(docs):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     # split document into chunks if of 1000 characters each
     split_docs = text_splitter.split_text(docs)
