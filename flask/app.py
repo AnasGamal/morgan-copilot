@@ -1,16 +1,28 @@
 import os
 
 import openai
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+import utils.agent as agent
 
 
 @app.route("/add-document", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        animal = request.files["file"]
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'})
+        file = request.files["file"]
+
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'})
+        
+        # read_file = file.read()
+        if file:
+            return agent.delegate(file)
+    
         # response = openai.Completion.create(
         #     model="text-davinci-003",
         #     prompt=generate_prompt(animal),
