@@ -1,6 +1,6 @@
 from .process_file import main
 from flask import jsonify
-from .text_embed import embed_text
+# from .text_embed import embed_text
 import openai
 
 def generate_prompt(document, query):
@@ -18,10 +18,10 @@ def delegate(file):
     print('this is what we have processed here')
     print(processed_file)
     query = "Describe relevant laws mentioned in the document."
-    embedded = embed_text(processed_file)
+    # embedded = embed_text(processed_file)
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt=generate_prompt(embedded, query),
+        prompt=generate_prompt(file, query),
         temperature=0.6,
     )
 
